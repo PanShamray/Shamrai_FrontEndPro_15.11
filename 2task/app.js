@@ -1,3 +1,5 @@
+const x = prompt("what is you`r name?");
+alert("Hello, " + x + "! How are you?");
 
 
 const userName = 'Vlad';
@@ -11,6 +13,4 @@ const pet = {
     petType: 'dog'
 }
 
-console.log(`Pet's name: ${pet.petName};`);
-console.log(`Pet's type: ${pet.petType};`);
-console.log(`Pet's age: ${pet.petAge}`);
+console.log(`Pet's name: ${pet.petName}, Pet's type: ${pet.petType}, Pet's age: ${pet.petAge}`);
