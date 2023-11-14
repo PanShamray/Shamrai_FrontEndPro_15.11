@@ -6,7 +6,7 @@ console.log(`Hi, my name is ${userName}! I'm ${userAge} y.o`);
 const pet = {
     petName: 'Alpha',
     petAge: '3',
-    petType: 'dog'
+    petType: 'cat'
 }
 
 console.log(`Pet's name: ${pet.petName};`);
