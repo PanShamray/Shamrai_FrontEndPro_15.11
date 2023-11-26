@@ -2,6 +2,6 @@ const askHourValue = prompt("Напишіть кількість годин як
 
 const changeHourVal = +askHourValue;
 
-const convertHourToSec = changeHourVal * 3600;
+const convertHourToSec = changeHourVal * 60 * 60;
 
 alert(`${changeHourVal} годин = ${convertHourToSec} секунд`)
