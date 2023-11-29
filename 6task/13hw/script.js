@@ -72,7 +72,7 @@ console.log("Непарні позитивні елементи ", oddPositiveEl
 
 const evenPositiveElements = [];
 
-for (i = 0; i <= positiveElementsOfArray.length; i++){
+for (i = 0; i < positiveElementsOfArray.length; i++){
     if (positiveElementsOfArray[i] % 2 === 0){
         evenPositiveElements.push(positiveElementsOfArray[i]);
     }
