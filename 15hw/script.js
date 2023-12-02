@@ -1,12 +1,11 @@
 const array = [1, 2, 3, 4, 5, 6, 7];
 
-const copiedArr = [...array];
+const newArray = removeElement(array, 5);
 
-function removeElement(array, item){
-    if (array.includes(item)){
-        array.splice(item - 1, 1);
-        console.log(array);
-    }
+function removeElement(array, item) {
+    return array.filter(function(element) {
+        return element !== item;
+    });
 }
-console.log("Початковий масив: ",array);
-removeElement(copiedArr, 5);
+
+console.log(newArray);
