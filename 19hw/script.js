@@ -8,8 +8,8 @@ function getCounter(){
     return sum;
 }
 
-const mySum = getCounter();
+const sum = getCounter();
 
-console.log(mySum(3));
-console.log(mySum(5));
-console.log(mySum(20));
+console.log(sum(3));
+console.log(sum(5));
+console.log(sum(20));
