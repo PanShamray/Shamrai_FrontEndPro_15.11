@@ -18,20 +18,22 @@ class Hamburger {
     constructor(size, ingredient) {
         this.size = size;
         this.ingredient = ingredient;
-        this.topping;
+        this.toppings = [];
     }
 
     addTopping(topping) {
-        this.topping = topping;
+        this.toppings.push(topping)
     }
 
     calculateCalories() {
-        const totalCalories = this.size.calories + this.ingredient.calories + this.topping.calories;
+        const totalCalories = this.size.calories + this.ingredient.calories + 
+            this.toppings.reduce((acc, topping) => acc + topping.calories, 0);
         return totalCalories;    
     }
 
     calculatePrice() {
-        const totalPrice = this.size.price + this.ingredient.price + this.topping.price;
+        const totalPrice = this.size.price + this.ingredient.price + 
+            this.toppings.reduce((acc, topping) => acc + topping.price, 0);
         return totalPrice;    
     }
 }
