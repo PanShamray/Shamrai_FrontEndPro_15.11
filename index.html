@@ -3,10 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ДЗ 36. Promise</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+    <label for="postId">Введіть ID поста (0-100): </label>
+    <input type="number" id="postId" min="0" max="100" required>
+    <button id="searchButton">Пошук</button>
+
+    <div id="postContainer" style="display: none;"></div>
+
+    <button id="commentsButton" style="display: none;">Відобразити коментарі до цього поста</button>
+    <div id="commentsContainer" style="display: none;"></div>
+
     <script src="script.js"></script>
 </body>
 </html>
