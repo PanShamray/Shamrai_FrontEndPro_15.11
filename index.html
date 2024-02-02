@@ -1,13 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ДЗ 37. Ajax Weather</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ДЗ 38. Ajax Weather</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="wrapper">
+            <form id="weatherForm">
+                <input type="text" id="inputCity" placeholder="Введіть місто латинськими літерами">
+            </form>
+            <div id="weather-info" style="display: none;">
+                <p>Місто: <span id="city"></span></p>
+                <p>Температура: <span id="temperature"></span> °C</p>
+                <div class="wrap-description">
+                    <p>Опис: <span id="description"></span></p>
+                    <img id="weather-icon" src="">
+                </div>
+                <p>Вологість: <span id="humidity"></span>%</p>
+                <p>Тиск: <span id="pressure"></span> hPa</p>
+                <p>Швидкість вітру: <span id="wind-speed"></span> м/с</p>
+                <p>Напрям вітру: <span id="wind-direction"></span> градусів</p>
+            </div>
+        </div>
     
-    <script src="script.js"></script>
-</body>
-</html>
+        <script src="script.js"></script>
+    </body>
+</html>        
