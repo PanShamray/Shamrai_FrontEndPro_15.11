@@ -16,7 +16,7 @@ body{
     color: white;
 }
 input {
-    width: 270px;
+    width: 225px;
 }
 input::placeholder {
     text-align: left;
