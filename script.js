@@ -17,7 +17,7 @@ const productsData = {
     ]
 };
 
-function createCategories() {
+function createCategories() {         //створення категорій
     const categoriesContainer = document.getElementById("categories");
 
     categoriesData.forEach(category => {
@@ -28,7 +28,7 @@ function createCategories() {
     });
 }
 
-function showProducts(category) {
+function showProducts(category) {            //вивід товарів конкретної категорії
     const productsContainer = document.getElementById("products");
     const productInfoContainer = document.getElementById("productInfo");
 
@@ -44,7 +44,7 @@ function showProducts(category) {
         });
 }
 
-function showProductInfo(product) {
+function showProductInfo(product) {            //інформація про товар
     const productInfoContainer = document.getElementById("productInfo");
 
     productInfoContainer.innerHTML = "";
@@ -62,9 +62,9 @@ function showProductInfo(product) {
     document.getElementById("productInfo").style.display = "block";
 }
 
-let userOrders = [];
+let userOrders = [];   // списсок замовлень
 
-function buyProduct(product) {
+function buyProduct(product) {            //додавання товару в localStorage при покупці
     const order = { 
         product: product.name, 
         price: product.price,
@@ -81,7 +81,7 @@ function buyProduct(product) {
     document.getElementById("productInfo").style.display = "none";
 }
 
-function showOrders() {
+function showOrders() {            //збереження та вивід всіх товарів які додали до списку замовлень
     const productsContainer = document.getElementById("products");
     productsContainer.innerHTML = "";
 
@@ -114,13 +114,13 @@ function showOrders() {
     }
 }
 
-function deleteOrder(index) {
+function deleteOrder(index) {          //видалення товарів із списку(опціонально)
     userOrders.splice(index, 1);
     localStorage.setItem('orders', JSON.stringify(userOrders));
     showOrders();
 }
 
-function showOrderDetails(order) {
+function showOrderDetails(order) {              //деталі до конкретного товару у списку
     const detailsContainer = document.getElementById(`orderDetails_${order.ID}`);
 
     if (detailsContainer.style.display === "block") {
@@ -135,9 +135,9 @@ function showOrderDetails(order) {
     }
 }
 
-let ordersVisible = false;
+let ordersVisible = false; //  видимість списку замовлень
 
-document.getElementById("myOrdersBtn").addEventListener("click", () => {
+document.getElementById("myOrdersBtn").addEventListener("click", () => {       // показати/приховати замовлення
     if (ordersVisible) {
         document.getElementById("products").innerHTML = "";
         ordersVisible = false;
@@ -148,9 +148,9 @@ document.getElementById("myOrdersBtn").addEventListener("click", () => {
     }
 });
 
-function loadOrders() {
+function loadOrders() {            // завантаження та збереження списку товарів у localStorage
     const savedOrders = localStorage.getItem('orders');
     userOrders = savedOrders ? JSON.parse(savedOrders) : [];
 }
 
-createCategories();
+createCategories();            // runner
