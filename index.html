@@ -4,32 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ДЗ 39. Модифікувати програму інтернет-магазин</title>
-    <style>
-        body {
-            display: flex;
-        }
-        #categories, #products, #productInfo {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin: 10px;
-            flex-grow: 1;
-        }
-        #productInfo {
-            display: none;
-        }
-        p{
-            margin: 2px;
-            padding-left: 50px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="categories"></div>
-    <div id="products"></div>
-    <div id="productInfo"></div>
+    <div class="wrapper">
+        <div id="categories"></div>
+        <div id="products"></div>
+        <div id="productInfo"></div>
+        
+        <button id="myOrdersBtn">Мої замовлення</button>
+    </div>
+    <div id="buyForm">
+        <form>
+            <div>
+                <input type="text" name="lastName" id="lastName" placeholder="Прізвище" required>
+                <input type="text" name="firstName" id="firstName" placeholder="Ім'я" required>
+                <input type="text" name="secondName" id="secondName" placeholder="Побатькові" required>
+            </div>
+            <div>
+                <label for="city">Місто:</label>
+                <select id="city" name="city" required>
+                    <option value="">Виберіть місто</option>
+                    <option value="Kyiv">Київ</option>
+                    <option value="Lviv">Львів</option>
+                    <option value="Kharkiv">Харків</option>
+                    <option value="Dnipro">Дніпро</option>
+                </select>
+            </div>
+            <div>
+                <label for="novaPoshtaBranch">Склад Нової пошти:</label>
+                <input type="text" id="novaPoshtaBranch" name="novaPoshtaBranch" required>
+            </div>
+            <div>
+                <label for="paymentMethod">Спосіб оплати:</label>
+                <select id="paymentMethod" name="paymentMethod" required>
+                    <option value="">Виберіть спосіб оплати</option>
+                    <option value="cashOnDelivery">Післяплата</option>
+                    <option value="creditCard">Оплата банківською карткою</option>
+                </select>
+            </div>
+            <div>
+                <label for="quantity">Кількість товару:</label>
+                <input type="number" id="quantity" name="quantity" min="1" required>
+            </div>
+            <div>
+                <label for="comment">Коментар до замовлення:</label><br>
+                <textarea id="comment" name="comment" rows="4" cols="50"></textarea>
+            </div>
+            <div>
+                <button type="submit" id="submitBtnForm">Підтвердити замовлення</button>
+            </div>
+        </form>
+    </div>
+    <div id="cover" style="display: none;">
+        
+    </div>
     
-    <button id="myOrdersBtn">Мої замовлення</button>
-
     <script src="script.js"></script>
 </body>
 </html>

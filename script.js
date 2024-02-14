@@ -89,8 +89,12 @@ function showOrders() {            //збереження та вивід всі
         userOrders.forEach((order, index) => {
             const orderElement = document.createElement("div");
             const orderDetails = document.createElement("div");
+            const buyButton = document.createElement("button");
             const deleteButton = document.createElement("button");
             const detailsButton = document.createElement("button");
+
+            buyButton.textContent = "КУПИТИ";
+            buyButton.addEventListener("click", () => buyForm(order));
 
             deleteButton.textContent = "Видалити";
             deleteButton.addEventListener("click", () => deleteOrder(index));
@@ -100,6 +104,7 @@ function showOrders() {            //збереження та вивід всі
 
             orderElement.textContent = `${order.product} `;
 
+            orderElement.appendChild(buyButton);
             orderElement.appendChild(deleteButton);
             orderElement.appendChild(detailsButton);
 
@@ -114,6 +119,36 @@ function showOrders() {            //збереження та вивід всі
     }
 }
 
+function buyForm(order) {           // форма покупця
+    const productsContainer = document.getElementById("products");
+    const buyFormDiv = document.getElementById("buyForm");
+    const submitBtnForm = document.getElementById("submitBtnForm");
+
+    productsContainer.innerHTML = "";
+    buyFormDiv.style.display = "block";
+    submitBtnForm.addEventListener("click", (event) => {
+        event.preventDefault();
+        processingForm(order);
+    });
+}
+
+
+function processingForm(order){   //      popup
+    const buyFormDiv = document.getElementById("buyForm");
+    buyFormDiv.style.display = "none";
+    const cover = document.getElementById("cover");
+    cover.style.display = "flex";
+    cover.innerHTML = `<div>
+            <span>Назва товару: ${order.product}</span><br>
+            <span>Номер замовлення: id_${order.ID}</span><br><br><br>
+            <span>ДЯКУЄМО ЗА ЗАМОВЛЕННЯ!</span><br>
+            <button id="okBtn">OK</button>
+    </div>`;
+    const okBtn = document.getElementById("okBtn");
+    okBtn.addEventListener('click', () => {
+        cover.style.display = "none";
+    });
+}
 function deleteOrder(index) {          //видалення товарів із списку(опціонально)
     userOrders.splice(index, 1);
     localStorage.setItem('orders', JSON.stringify(userOrders));
