@@ -1,9 +1,6 @@
 const browserInfo = `
     Browser: ${navigator.appName}<br>
-    Version: ${navigator.userAgent}<br>
-    Cookies Enabled: ${navigator.cookieEnabled}<br>
-    Platform: ${navigator.platform}<br>
-    Script executed through: ${navigator.vendor}<br>
+    Version: ${navigator.userAgent}
 `;
 
 document.getElementById("browserInfo").innerHTML = browserInfo;
