@@ -1,47 +1,80 @@
-const browserInfo = `
-    Browser: ${navigator.appName}<br>
-    Version: ${navigator.userAgent}
-`;
+function getBrowser() {
+    const wrappDiv = document.getElementById("browserInfo");
+    let browserName = '';
+    let browserVersion = '';
 
-document.getElementById("browserInfo").innerHTML = browserInfo;
+    if (window.navigator.userAgent.includes('OPR/107.0.0.0')){
+        browserName = 'Opera';
+        browserVersion = '107.0.0.0';
+    } else if (window.navigator.userAgent.includes('Edg/121.0.0.0')) {
+        browserName = 'Edge';
+        browserVersion = '121.0.0.0';
+    } else {
+        browserName = 'Google Chrome';
+        browserVersion = '119.0.0.0';
+    }
+
+    const browserInfo = `
+        <p>Browser: ${browserName}</p>
+        <p>Version: ${browserVersion}</p>
+    `;
+
+    wrappDiv.innerHTML = browserInfo;
+}
+
+getBrowser()
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-function selectCheckboxFromURL() {
+
+function getUrlParams() {
     const urlParams = new URLSearchParams(window.location.search);
-    const devicesParam = urlParams.get('devices');
-
-    if(devicesParam){
-        const devices = devicesParam.split(',');
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        checkboxes.forEach(checkbox => {
-            if(devices.includes(checkbox.value.toLowerCase())){
-                checkbox.checked = true;
-            }
-        })
-    }
+    return Array.from(urlParams.keys());
 }
-selectCheckboxFromURL();
 
-document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-    checkbox.addEventListener('change', function() {
-        const value = this.value.toLowerCase();
-        const urlParams = new URLSearchParams(window.location.search);
-        let devicesParam = urlParams.get('devices');
+const iphone = document.getElementById("iphoneCheckbox");
+const samsung = document.getElementById("samsungCheckbox");
+const meizu = document.getElementById("meizuCheckbox");
+const asus = document.getElementById("asusCheckbox");
 
-        if(!devicesParam){
-            devicesParam = value;
-        } else {
-            const devices = devicesParam.split(',');
-            const index = devices.indexOf(value);
+function setCheckboxState() {
+    const urlParams = getUrlParams();
 
-            if(index === -1){
-                devices.push(value)
-            } else {
-                devices.splice(index, 1)
-            }
-            devicesParam = devices.join(',');
+    urlParams.forEach((param) => {
+        if (param === "iphone") {
+            iphone.checked = true;
+        } else if (param === "samsung") {
+            samsung.checked = true;
+        } else if (param === "meizu") {
+            meizu.checked = true;
+        } else if (param === "asus") {
+            asus.checked = true;
         }
-        const newUrl = window.location.origin + window.location.pathname + "?devices=" + devicesParam;
-        window.history.replaceState({path: newUrl},'', newUrl);
-    })
-})
+    });
+}
+
+setCheckboxState();
+
+function updateUrlParams() {
+    const checkedParams = [];
+    if (iphone.checked) {
+        checkedParams.push("iphone");
+    }
+    if (samsung.checked) {
+        checkedParams.push("samsung");
+    }
+    if (meizu.checked) {
+        checkedParams.push("meizu");
+    }
+    if (asus.checked) {
+        checkedParams.push("asus");
+    }
+    const newUrlParams = checkedParams.length > 0 ? `devices=${checkedParams.join(",")}` : "";
+    const baseUrl = window.location.href.split("?")[0];
+    const newUrl = baseUrl + (newUrlParams ? `?${newUrlParams}` : "");
+    window.history.replaceState({}, "", newUrl);
+}
+
+iphone.addEventListener("change", updateUrlParams);
+samsung.addEventListener("change", updateUrlParams);
+meizu.addEventListener("change", updateUrlParams);
+asus.addEventListener("change", updateUrlParams);
