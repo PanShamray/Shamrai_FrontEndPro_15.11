@@ -1,4 +1,4 @@
-const comment = `Ти казала в понедiлок – пiдем разом по барвiнок.<br>
+let comment = `Ти казала в понедiлок – пiдем разом по барвiнок.<br>
 Я прийшов, тебе нема, пiдманула, пiдвела.<br>
 Ти ж мене пiдманула, ти ж мене пiдвела.<br>
 Ти ж мене, молодого, з ума розуму звела.<br>
@@ -35,11 +35,9 @@ const comment = `Ти казала в понедiлок – пiдем разом
 
 const badWords = ['пiдманула', 'пiдвела', 'понедiлок', 'вiвторок', 'середу', 'четвер', 'п’ятницю', 'суботу', 'недiлю'];
 
-let mutableComment = comment;
-
 badWords.forEach(word => {
     const filter = new RegExp(word, 'gi');
-    mutableComment = mutableComment.replace(filter, match => '*'.repeat(match.length));
+    comment = comment.replace(filter, match => '*'.repeat(match.length));
 });
 
-document.body.innerHTML = `<p>${mutableComment}</p>`;
+document.body.innerHTML = `<p>${comment}</p>`;
