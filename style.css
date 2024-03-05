@@ -12,37 +12,45 @@ body {
 .wrapper__images {
   border: 3px solid black;
   border-radius: 8px;
-
-  width: 500px;
-  height: 285px;
   overflow: hidden;
+  height: 285px;
+}
+.wrapper__images__slider {
+  height: 285px;
+  width: 4000px;
+  display: flex;
+  position: relative;
+  left: 0;
+  transition: all ease 1s;
 }
 .wrapper__images img {
-  width: 100%;
+  width: 500px;
   height: 100%;
   object-fit: cover;
 }
-
 .wrapper__btns {
   width: 100%;
   margin-top: 16px;
-  display: flex;
-  justify-content: space-between;
 }
-
+#nextBtn {
+  position: absolute;
+  right: 391px;
+}
+#backBtn {
+  position: absolute;
+  left: 391px;
+}
 .wrapper__btns button {
   background-color: #ff7f50;
   border: none;
   font-size: larger;
   padding: 8px;
   border-radius: 4px;
-  transition: background-color 0.3s;
+  transition: background-color 0.15s;
 }
-
 .wrapper__btns button:hover {
   background-color: #d76d46;
 }
-
 .wrapper__btns button:active {
   background-color: #944c31;
 }
