@@ -1,0 +1,16 @@
+{
+  "name": "hillel_it",
+  "version": "1.0.0",
+  "description": "testGulp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gulp": "gulp"
+  },
+  "author": "",
+  "license": "ISC",
+  
+  "devDependencies": {
+    "gulp": "^4.0.2"
+  }
+}
