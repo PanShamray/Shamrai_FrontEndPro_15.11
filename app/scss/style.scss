@@ -1,0 +1,42 @@
+.wrapper {
+	display: flex;
+	flex-grow: 1;
+}
+#categories, #products, #productInfo {
+	border: 1px solid #ccc;
+	padding: 10px;
+	margin: 10px;
+	flex-grow: 1;
+}
+#productInfo {
+	display: none;
+}
+p {
+	margin: 2px;
+	padding-left: 50px;
+}
+#buyForm {
+	display: none;
+	border: 1px solid #ccc;
+	flex-basis: 100%;
+}
+form div {
+	margin: 5px;
+	padding: 5px;
+	flex-grow: 1;
+}
+#cover {
+	background-color: rgb(216, 203, 222);
+	position: absolute;
+	width: 20%;
+	height: 25%;
+	border-radius: 20px;
+	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+	justify-content: center;
+	align-items: center;
+	margin-top: 100px;
+	margin-left: 39%;
+	div {
+		font-weight: 500;
+	}
+}

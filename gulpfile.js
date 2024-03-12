@@ -1,66 +1,119 @@
-var gulp = require("gulp");
-const sass = require("gulp-sass")(require("sass"));
-const browserSync = require("browser-sync");
-var concat = require("gulp-concat");
-var uglify = require("gulp-uglifyjs");
-var cssnano = require("gulp-cssnano");
-var rename = require("gulp-rename");
-var del = require("del");
+const { src, dest, watch, parallel, series } = require("gulp");
 
-gulp.task("clean", function () {
-  return del.sync("dist");
-});
+const scss = require("gulp-sass")(require("sass"));
+const concat = require("gulp-concat");
+const uglify = require("gulp-uglify-es").default;
+const browserSync = require("browser-sync").create();
+const autoprefixer = require("gulp-autoprefixer");
+const webp = require("gulp-webp");
+const newer = require("gulp-newer");
+const ttf2woff2 = require("gulp-ttf2woff2");
+const include = require("gulp-include");
+const rigger = require("gulp-rigger");
+const rename = require("gulp-rename");
+const htmlmin = require("gulp-htmlmin");
+const changed = require("gulp-changed");
 
-gulp.task("sass-compile", function () {
-  return gulp
-    .src("./app/sass/**/*.sass")
-    .pipe(sass())
-    .pipe(gulp.dest("./app/css"))
-    .pipe(browserSync.reload({ stream: true }));
-});
+function images() {
+  return src("app/images/accomodate/**/*.*")
+    .pipe(newer("app/images"))
+    .pipe(webp())
+    .pipe(dest("app/images"));
+}
 
-gulp.task("watch", ["browser-sync", "css-libs", "scripts"], function () {
-  gulp.watch("./app/sass/**/*.sass", ["sass-compile"]);
-  gulp.watch("./app/*.html", browserSync.reload);
-  gulp.watch("./app/js/**/*.js", browserSync.reload);
-});
+function fonts() {
+  return src("app/fonts/accomodate/**/*.*")
+    .pipe(changed("app/fonts", { extension: ".woff2" }))
+    .pipe(ttf2woff2())
+    .pipe(dest("app/fonts"));
+}
 
-gulp.task("browser-sync", function () {
-  browserSync({
-    server: {
-      baseDir: "app",
-    },
-    notify: false,
-  });
-});
+function pages() {
+  return src("app/**/*.dev.html")
+    .pipe(
+      include({
+        includePaths: "app/layouts/",
+      })
+    )
+    .pipe(htmlmin({ collapseWhitespace: true }))
+    .pipe(
+      rename(function (path) {
+        path.basename = path.basename.replace(".dev", "");
+        path.extname = ".html";
+      })
+    )
+    .pipe(dest("app"))
+    .pipe(browserSync.stream());
+}
 
-gulp.task("scripts", function () {
-  return gulp
-    .src([
-      "app/jquery/dist/jquery.min.js",
-      "app/magnific-popup/dist/jquery.magnific-popup.min.js",
-    ])
-    .pipe(concat("libs.min.js"))
+function styles() {
+  return src("app/scss/*.scss")
+    .pipe(autoprefixer({ overrideBrowserslist: ["last 10 version"] }))
+    .pipe(
+      rename({
+        suffix: ".min",
+        extname: ".css",
+      })
+    )
+    .pipe(scss({ outputStyle: "compressed" }))
+    .pipe(dest("app/css"))
+    .pipe(browserSync.stream());
+}
+
+function scripts() {
+  return src("app/js/accomodate/**/*.js")
+    .pipe(rigger())
     .pipe(uglify())
-    .pipe(gulp.dest("app/js"));
-});
+    .pipe(
+      rename({
+        suffix: ".min",
+        extname: ".js",
+      })
+    )
+    .pipe(dest("app/js"))
+    .pipe(browserSync.stream());
+}
 
-gulp.task("css-libs", ["sass-compile"], function () {
-  return gulp
-    .src("app/css/main.css")
-    .pipe(cssnano())
-    .pipe(rename({ suffix: ".min" }))
-    .pipe(gulp.dest("app/css"));
-});
+function watching() {
+  browserSync.init({
+    server: {
+      baseDir: "app/",
+    },
+  });
+  watch(["app/images/accomodate/**/*.*"], images);
+  watch(["app/fonts/accomodate/**/*.*"], fonts);
+  watch(["app/layouts/**/*.html", "app/**/*.dev.html"], pages);
+  watch(["app/scss/**/*.scss"], styles);
+  watch(["app/js/accomodate/**/*.js", "app/js/components/**/*.js"], scripts).on(
+    "change",
+    browserSync.reload
+  );
+}
 
-gulp.task("build", ["clean", "sass-compile", "scripts"], function () {
-  var buildCss = gulp
-    .src(["./app/css/main.css", "./app/css/libs.min.css"])
-    .pipe(gulp.dest("dist/css"));
+function building() {
+  return src(
+    [
+      "app/images/**/*.*",
+      "!app/images/accomodate/**/*.*",
+      "app/fonts/**/*.*",
+      "!app/fonts/accomodate/**/*.*",
+      "app/**/*.html",
+      "!app/**/*.dev.html",
+      "!app/layouts/**/*.*",
+      "app/css/**/*.css",
+      "app/js/**/*.min.js",
+    ],
+    { base: "app" }
+  ).pipe(dest("dist"));
+}
 
-  var buildFonts = gulp.src("app/fonts/**/*").pipe(gulp.dest("dist/fonts"));
+exports.styles = styles;
+exports.images = images;
+exports.fonts = fonts;
+exports.pages = pages;
+exports.building = building;
+exports.scripts = scripts;
+exports.watching = watching;
 
-  var buildJs = gulp.src("app/js/**/*").pipe(gulp.dest("dist/js"));
-
-  var buildHtml = gulp.src("app/*.html").pipe(gulp.dest("dist"));
-});
+exports.build = series(images, fonts, scripts, styles, pages, building);
+exports.default = parallel(styles, fonts, images, scripts, pages, watching);
